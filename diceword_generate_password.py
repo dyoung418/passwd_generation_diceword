@@ -1,5 +1,8 @@
+from __future__ import print_function
 import random
+import argparse
 wordlist_filename = 'wordlist.diceware.txt'
+num_words = 6
 
 
 def GenerateDiceWord():
@@ -11,14 +14,28 @@ def GenerateDiceWord():
     password.
     Look it up in Wikipedia to see why it is a strong passwd even though
     it is chosen from a dictionary list.'''
+    global wordlist_filename
+    global num_words
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--filename", help="Specify the filename of a wordlist in diceware format.  Uses {} by default.".format(wordlist_filename))
+    parser.add_argument("-n", "--num_words", help="The number of words you would like in the produced password.  Defauult is {}".format(num_words), type=int)
+    args = parser.parse_args()
+    if args.filename:
+        wordlist_filename = args.filename
+    if args.num_words:
+        num_words = args.num_words
     index_num = []
     password = []
     random.seed()
     for i in range(1092): #just me being paranoid
         x = random.randrange(0, 10)
-    with open(wordlist_filename,'r') as f:
-        wordlist = f.readlines()
-    for j in range(6): #generate 6 words
+    try:
+        with open(wordlist_filename,'r') as f:
+            wordlist = f.readlines()
+    except:
+        print("Could not open {}".format(wordlist_filename))
+        return
+    for j in range(num_words): #generate [6] words
         for i in range(5):  #need 5 digits to form an index for each word
             index_num.append(str(random.randrange(1,7)))
         index = ''.join(index_num)
