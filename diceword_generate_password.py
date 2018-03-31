@@ -4,6 +4,10 @@ import argparse
 wordlist_filename = 'wordlist.diceware.txt'
 num_words = 6
 
+#TODO change to using diceware8k.txt.  The FAQ says if you use a computer random number generator
+#  (even though it advises not to), then to insure a uniform distribution of words, it is best 
+#  to using a list of words that is a whole power of two in length.  That is why there is the
+#  diceware8k list.
 
 def GenerateDiceWord():
     '''Generates a password by choosing 6 words randomly from a list.
